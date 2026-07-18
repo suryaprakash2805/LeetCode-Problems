@@ -1,0 +1,21 @@
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        findCombination(candidates, target, 0, new ArrayList<>(), result);
+        return result;
+    }
+
+    public void findCombination(int arr[], int target, int index, List<Integer> temp, List<List<Integer>> result){
+        if(target == 0){
+            result.add(new ArrayList<>(temp));
+            return;
+        }
+        if(target < 0 || index == arr.length) return;
+        if(arr[index] <= target){
+          temp.add(arr[index]);
+          findCombination(arr, target-arr[index], index, temp, result);
+          temp.remove(temp.size()-1);
+        }
+          findCombination(arr, target, index+1, temp, result);
+    }
+}
