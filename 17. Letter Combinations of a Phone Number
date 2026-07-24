@@ -1,0 +1,23 @@
+class Solution {
+    private String map[];
+    public List<String> letterCombinations(String digits) {
+      map = new String[]{"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+      List<String> result = new ArrayList<>();
+      findLetterCombinations(0,digits,"",result);
+      return result;
+    }
+
+    public void findLetterCombinations(int index,String digits,String cur, 
+                                                     List<String> result){
+      if(cur.length() == digits.length()){
+            result.add(cur);
+            return;
+      }
+         
+      String s = map[digits.charAt(index)-'0'];
+
+      for(int i=0;i<s.length();i++){
+        findLetterCombinations(index+1,digits,cur+s.charAt(i),result);
+        } 
+    }
+}
