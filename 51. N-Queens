@@ -1,0 +1,39 @@
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> result = new ArrayList<>();
+        char board[][] = new char[n][n];
+        for(int i=0;i<n;i++) Arrays.fill(board[i],'.');
+        int leftRow[] = new int[n];
+        int upperDiagonal[] = new int[n*2];
+        int lowerDiagonal[] = new int[n*2];
+        placeQueens(0,leftRow,upperDiagonal,lowerDiagonal,n,board,result);
+        return result;
+    }
+    public void placeQueens(int col, int leftRow[], int upperDiagonal[], 
+     int lowerDiagonal[], int n, char board[][], List<List<String>> result){
+        if(col==n){
+            List<String> tempList = new ArrayList<>();
+            for(int i=0;i<n;i++){
+                 tempList.add(new String(board[i]));
+            }
+            result.add(tempList);
+            return;
+        }
+
+        for(int row=0;row<n;row++){
+          if(leftRow[row]==0 && upperDiagonal[n-1+col-row]==0 && 
+             lowerDiagonal[row+col]==0){
+                board[row][col] = 'Q';
+                leftRow[row] = 1;
+                upperDiagonal[n-1+col-row] = 1;
+                lowerDiagonal[row+col] = 1;
+                placeQueens(col+1,leftRow,upperDiagonal,lowerDiagonal,n,board,result);
+                board[row][col] = '.';
+                leftRow[row] = 0;
+                upperDiagonal[n-1+col-row] = 0;
+                lowerDiagonal[row+col] = 0;
+            }
+        }
+
+    }
+}
