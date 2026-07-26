@@ -1,0 +1,33 @@
+class Solution {
+    public List<String> addOperators(String num, int target) {
+         List<String> result = new ArrayList<>();
+         insertOperators(0,0,"",0,num,target,result);
+         return result;
+    }
+
+    public void insertOperators(int start, long curVal, String curStr, long lastOperand, String num, int target, List<String> result){
+        if(start == num.length()){
+            if(curVal == target) result.add(curStr);
+            return;
+        }
+        for(int i=start;i<num.length();i++){
+
+             if(i>start && num.charAt(start)=='0') return;
+
+             String curSubStr = num.substring(start,i+1);
+             long curSubVal = Long.parseLong(curSubStr);
+    
+             if(start==0){
+                insertOperators(i+1, curSubVal, curSubStr, curSubVal, num, target, result);
+             }
+             else{
+                 insertOperators(i+1, curVal+curSubVal, curStr+"+"+curSubStr, curSubVal, num, target, result);
+
+                 insertOperators(i+1, curVal-curSubVal, curStr+"-"+curSubStr, -curSubVal, num, target, result);
+
+                 insertOperators(i+1, curVal-lastOperand+lastOperand*curSubVal, curStr+"*"+curSubStr, lastOperand*curSubVal, num, target, result);
+             }
+
+        }
+    }
+}
