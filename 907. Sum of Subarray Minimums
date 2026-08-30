@@ -1,0 +1,38 @@
+class Solution {
+    public int sumSubarrayMins(int[] arr) {
+        int nse[] = findNSE(arr);
+        int psee[] = findPSEE(arr);
+        int result = 0;
+        int mod = (int)Math.pow(10,9) + 7;
+        for(int i=0;i<arr.length;i++){
+            int left = i - psee[i];
+            int right = nse[i]  - i;
+            long freq = left * right * 1L;
+            int val = (int)(freq * arr[i] % mod);
+            result = (result + val) % mod;
+        }
+        return result;
+    }
+
+    public int[] findNSE(int arr[]){
+        Stack<Integer> st = new Stack<Integer>();
+        int result[] = new int[arr.length];
+        for(int i=result.length-1;i>=0;i--){
+            while(!st.isEmpty() && arr[i] < arr[st.peek()]) st.pop();
+            result[i] = st.isEmpty() ? result.length : st.peek();
+            st.push(i);
+        }
+        return result;
+    }
+
+    public int[] findPSEE(int arr[]){
+        Stack<Integer> st = new Stack<Integer>();
+        int result[] = new int[arr.length];
+        for(int i=0;i<result.length;i++){
+            while(!st.isEmpty() && arr[i] <= arr[st.peek()]) st.pop();
+            result[i] = st.isEmpty() ? -1 : st.peek();
+            st.push(i);
+        }
+        return result;
+    }
+}
