@@ -7,7 +7,7 @@ class Solution {
         int maxLen = 0;
         for(int fruit : fruits){
             if(left == fruit || right == fruit) len++;
-            else len = streak +1 ;
+            else len = streak + 1 ;
 
             if(right == fruit) streak++;
             else{
