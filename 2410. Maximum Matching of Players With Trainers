@@ -1,0 +1,18 @@
+class Solution {
+    public int matchPlayersAndTrainers(int[] players, int[] trainers) {
+        Arrays.sort(players);
+        Arrays.sort(trainers);
+        int result = 0;
+        int playersIndex = 0;
+        int trainersIndex = 0;
+        while(playersIndex < players.length && trainersIndex < trainers.length){
+             if(trainers[trainersIndex] >= players[playersIndex]){
+                result++;
+                trainersIndex++;
+                playersIndex++;
+             }
+             else trainersIndex++;
+        }
+        return result;
+    }
+}
